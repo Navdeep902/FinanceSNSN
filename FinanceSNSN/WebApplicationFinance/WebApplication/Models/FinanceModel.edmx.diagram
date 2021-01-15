@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7e33def1b7ab49228c8f10d684b6300a" Name="Diagram1">
+        <EntityTypeShape EntityType="dbfinanceModel.Admin" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.Card" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.Cart" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.EMICard" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.Products" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.RegisterBank" Width="1.5" PointX="0.875" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbfinanceModel.Transactions" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="dbfinanceModel.FK__EMICard__admin_u__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__EMICard__Card_Ty__22751F6C" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__Cart__Card_Numbe__2BFE89A6" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__Cart__Product_ID__2CF2ADDF" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__EMICard__usernam__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__Transacti__Card___3A4CA8FD" ManuallyRouted="false" />
+        <AssociationConnector Association="dbfinanceModel.FK__Transacti__Produ__395884C4" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

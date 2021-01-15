@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbfinanceModelStoreContainer" CdmEntityContainer="dbfinanceEntities">
+    <EntitySetMapping Name="Admin">
+      <EntityTypeMapping TypeName="dbfinanceModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Card">
+      <EntityTypeMapping TypeName="dbfinanceModel.Card">
+        <MappingFragment StoreEntitySet="Card">
+          <ScalarProperty Name="Card_Type" ColumnName="Card_Type" />
+          <ScalarProperty Name="Total_Credit" ColumnName="Total_Credit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cart">
+      <EntityTypeMapping TypeName="dbfinanceModel.Cart">
+        <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="Cart_ID" ColumnName="Cart_ID" />
+          <ScalarProperty Name="Card_Number" ColumnName="Card_Number" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMICard">
+      <EntityTypeMapping TypeName="dbfinanceModel.EMICard">
+        <MappingFragment StoreEntitySet="EMICard">
+          <ScalarProperty Name="Card_Number" ColumnName="Card_Number" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="Card_Type" ColumnName="Card_Type" />
+          <ScalarProperty Name="valid" ColumnName="valid" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="admin_username" ColumnName="admin_username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="dbfinanceModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisterBank">
+      <EntityTypeMapping TypeName="dbfinanceModel.RegisterBank">
+        <MappingFragment StoreEntitySet="RegisterBank">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="Phone_No" ColumnName="Phone_No" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Card_Type" ColumnName="Card_Type" />
+          <ScalarProperty Name="Fees_Paid" ColumnName="Fees_Paid" />
+          <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+          <ScalarProperty Name="Account_Number" ColumnName="Account_Number" />
+          <ScalarProperty Name="IFSC_Code" ColumnName="IFSC_Code" />
+          <ScalarProperty Name="document" ColumnName="document" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="dbfinanceModel.Transactions">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="Transaction_ID" ColumnName="Transaction_ID" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount_Paid" />
+          <ScalarProperty Name="Card_Number" ColumnName="Card_Number" />
+          <ScalarProperty Name="EMI_Tenure" ColumnName="EMI_Tenure" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Delete_EMIDetails" FunctionName="dbfinanceModel.Store.Delete_EMIDetails" />
+    <FunctionImportMapping FunctionImportName="sp_AdminLoginCheck" FunctionName="dbfinanceModel.Store.sp_AdminLoginCheck" />
+    <FunctionImportMapping FunctionImportName="sp_CartProducts" FunctionName="dbfinanceModel.Store.sp_CartProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbfinanceModel.sp_CartProducts_Result">
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Product_Total" ColumnName="Product Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_check" FunctionName="dbfinanceModel.Store.sp_check" />
+    <FunctionImportMapping FunctionImportName="sp_checkverify" FunctionName="dbfinanceModel.Store.sp_checkverify" />
+    <FunctionImportMapping FunctionImportName="sp_CreditDetails" FunctionName="dbfinanceModel.Store.sp_CreditDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbfinanceModel.sp_CreditDetails_Result">
+          <ScalarProperty Name="Total_Credit" ColumnName="Total Credit" />
+          <ScalarProperty Name="Credit_Used" ColumnName="Credit Used" />
+          <ScalarProperty Name="Reamining_Credit" ColumnName="Reamining Credit" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_EmailCheck" FunctionName="dbfinanceModel.Store.sp_EmailCheck" />
+    <FunctionImportMapping FunctionImportName="sp_GetAllRegister" FunctionName="dbfinanceModel.Store.sp_GetAllRegister" />
+    <FunctionImportMapping FunctionImportName="sp_GetCardNumberWithUsername" FunctionName="dbfinanceModel.Store.sp_GetCardNumberWithUsername" />
+    <FunctionImportMapping FunctionImportName="sp_InsertEMICard" FunctionName="dbfinanceModel.Store.sp_InsertEMICard" />
+    <FunctionImportMapping FunctionImportName="sp_LastTransactionDate" FunctionName="dbfinanceModel.Store.sp_LastTransactionDate" />
+    <FunctionImportMapping FunctionImportName="sp_TotalCostWithout" FunctionName="dbfinanceModel.Store.sp_TotalCostWithout" />
+    <FunctionImportMapping FunctionImportName="sp_updatepassword" FunctionName="dbfinanceModel.Store.sp_updatepassword" />
+    <FunctionImportMapping FunctionImportName="sp_UserLoginCheck" FunctionName="dbfinanceModel.Store.sp_UserLoginCheck" />
+    <FunctionImportMapping FunctionImportName="sp_UserProducts" FunctionName="dbfinanceModel.Store.sp_UserProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbfinanceModel.sp_UserProducts_Result">
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount Paid" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="EMI_Tenure" ColumnName="EMI_Tenure" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UserProductWithId" FunctionName="dbfinanceModel.Store.sp_UserProductWithId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbfinanceModel.sp_UserProductWithId_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount Paid" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Current_Payment" ColumnName="Current_Payment" />
+          <ScalarProperty Name="EMI_Tenure" ColumnName="EMI_Tenure" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UserTransactions" FunctionName="dbfinanceModel.Store.sp_UserTransactions">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dbfinanceModel.sp_UserTransactions_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount_Paid" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UserWithEmail" FunctionName="dbfinanceModel.Store.sp_UserWithEmail" />
+  </EntityContainerMapping>
+</Mapping>

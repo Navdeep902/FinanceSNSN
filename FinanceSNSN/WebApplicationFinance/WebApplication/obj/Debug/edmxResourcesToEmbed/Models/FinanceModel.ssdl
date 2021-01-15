@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbfinanceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="Card_Type" />
+    </Key>
+    <Property Name="Card_Type" Type="bit" Nullable="false" />
+    <Property Name="Total_Credit" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Cart_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Cart_ID" Type="int" Nullable="false" />
+    <Property Name="Card_Number" Type="int" Nullable="false" />
+    <Property Name="Product_ID" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMICard">
+    <Key>
+      <PropertyRef Name="Card_Number" />
+    </Key>
+    <Property Name="Card_Number" Type="int" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Card_Type" Type="bit" />
+    <Property Name="valid" Type="date" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="admin_username" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Cost" Type="money" Nullable="false" />
+    <Property Name="imagePath" Type="varchar" MaxLength="50" />
+    <Property Name="Details" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegisterBank">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Phone_No" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Address" Type="text" Nullable="false" />
+    <Property Name="Card_Type" Type="bit" Nullable="false" />
+    <Property Name="Fees_Paid" Type="bit" />
+    <Property Name="Bank_Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Account_Number" Type="int" Nullable="false" />
+    <Property Name="IFSC_Code" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="document" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Product_ID" Type="int" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Amount_Paid" Type="money" Nullable="false" />
+    <Property Name="Card_Number" Type="int" />
+    <Property Name="EMI_Tenure" Type="int" />
+  </EntityType>
+  <Association Name="FK__Cart__Card_Numbe__27F8EE98">
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMICard">
+        <PropertyRef Name="Card_Number" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Card_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__Product_ID__28ED12D1">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMICard__admin_u__2057CCD0">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="admin_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMICard__Card_Ty__1E6F845E">
+    <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Card_Type" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="Card_Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMICard__usernam__1D7B6025">
+    <End Role="RegisterBank" Type="Self.RegisterBank" Multiplicity="1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegisterBank">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Card___24285DB4">
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="0..1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMICard">
+        <PropertyRef Name="Card_Number" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Card_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Produ__2334397B">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Delete_EMIDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_AdminLoginCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_CartProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cartId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_check" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_checkverify" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="uname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_CreditDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cardNumber" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_EmailCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_GetAllRegister" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_GetCardNumberWithUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertEMICard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_LastTransactionDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="productId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_TotalCostWithout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cartId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_updatepassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_UserLoginCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_UserProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_UserProductWithId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="productId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_UserTransactions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_UserWithEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="dbfinanceModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMICard" EntityType="Self.EMICard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegisterBank" EntityType="Self.RegisterBank" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Cart__Card_Numbe__27F8EE98" Association="Self.FK__Cart__Card_Numbe__27F8EE98">
+      <End Role="EMICard" EntitySet="EMICard" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__Product_ID__28ED12D1" Association="Self.FK__Cart__Product_ID__28ED12D1">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMICard__admin_u__2057CCD0" Association="Self.FK__EMICard__admin_u__2057CCD0">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMICard__Card_Ty__1E6F845E" Association="Self.FK__EMICard__Card_Ty__1E6F845E">
+      <End Role="Card" EntitySet="Card" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMICard__usernam__1D7B6025" Association="Self.FK__EMICard__usernam__1D7B6025">
+      <End Role="RegisterBank" EntitySet="RegisterBank" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Card___24285DB4" Association="Self.FK__Transacti__Card___24285DB4">
+      <End Role="EMICard" EntitySet="EMICard" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Produ__2334397B" Association="Self.FK__Transacti__Produ__2334397B">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

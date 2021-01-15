@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbfinanceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EMICard" Relationship="Self.FK__EMICard__admin_u__245D67DE" FromRole="Admin" ToRole="EMICard" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="Card_Type" />
+    </Key>
+    <Property Name="Card_Type" Type="Boolean" Nullable="false" />
+    <Property Name="Total_Credit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="EMICard" Relationship="Self.FK__EMICard__Card_Ty__22751F6C" FromRole="Card" ToRole="EMICard" />
+  </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Cart_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Cart_ID" Type="Int32" Nullable="false" />
+    <Property Name="Card_Number" Type="Int32" Nullable="false" />
+    <Property Name="Product_ID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EMICard" Relationship="Self.FK__Cart__Card_Numbe__2BFE89A6" FromRole="Cart" ToRole="EMICard" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Cart__Product_ID__2CF2ADDF" FromRole="Cart" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="EMICard">
+    <Key>
+      <PropertyRef Name="Card_Number" />
+    </Key>
+    <Property Name="Card_Number" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Card_Type" Type="Boolean" />
+    <Property Name="valid" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="admin_username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Admin" Relationship="Self.FK__EMICard__admin_u__245D67DE" FromRole="EMICard" ToRole="Admin" />
+    <NavigationProperty Name="Card" Relationship="Self.FK__EMICard__Card_Ty__22751F6C" FromRole="EMICard" ToRole="Card" />
+    <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__Card_Numbe__2BFE89A6" FromRole="EMICard" ToRole="Cart" />
+    <NavigationProperty Name="RegisterBank" Relationship="Self.FK__EMICard__usernam__2180FB33" FromRole="EMICard" ToRole="RegisterBank" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Card___3A4CA8FD" FromRole="EMICard" ToRole="Transactions" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="imagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__Product_ID__2CF2ADDF" FromRole="Products" ToRole="Cart" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__395884C4" FromRole="Products" ToRole="Transactions" />
+  </EntityType>
+  <EntityType Name="RegisterBank">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone_No" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Card_Type" Type="Boolean" Nullable="false" />
+    <Property Name="Fees_Paid" Type="Boolean" />
+    <Property Name="Bank_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Account_Number" Type="Int32" Nullable="false" />
+    <Property Name="IFSC_Code" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="document" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EMICard" Relationship="Self.FK__EMICard__usernam__2180FB33" FromRole="RegisterBank" ToRole="EMICard" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Product_ID" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Amount_Paid" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Card_Number" Type="Int32" />
+    <Property Name="EMI_Tenure" Type="Int32" />
+    <NavigationProperty Name="EMICard" Relationship="Self.FK__Transacti__Card___3A4CA8FD" FromRole="Transactions" ToRole="EMICard" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Transacti__Produ__395884C4" FromRole="Transactions" ToRole="Products" />
+  </EntityType>
+  <Association Name="FK__EMICard__admin_u__245D67DE">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="admin_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMICard__Card_Ty__22751F6C">
+    <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Card_Type" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="Card_Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__Card_Numbe__2BFE89A6">
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMICard">
+        <PropertyRef Name="Card_Number" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Card_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__Product_ID__2CF2ADDF">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMICard__usernam__2180FB33">
+    <End Role="RegisterBank" Type="Self.RegisterBank" Multiplicity="1" />
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegisterBank">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="EMICard">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Card___3A4CA8FD">
+    <End Role="EMICard" Type="Self.EMICard" Multiplicity="0..1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMICard">
+        <PropertyRef Name="Card_Number" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Card_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Produ__395884C4">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbfinanceEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="Card" EntityType="Self.Card" />
+    <EntitySet Name="Cart" EntityType="Self.Cart" />
+    <EntitySet Name="EMICard" EntityType="Self.EMICard" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="RegisterBank" EntityType="Self.RegisterBank" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" />
+    <AssociationSet Name="FK__EMICard__admin_u__245D67DE" Association="Self.FK__EMICard__admin_u__245D67DE">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMICard__Card_Ty__22751F6C" Association="Self.FK__EMICard__Card_Ty__22751F6C">
+      <End Role="Card" EntitySet="Card" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__Card_Numbe__2BFE89A6" Association="Self.FK__Cart__Card_Numbe__2BFE89A6">
+      <End Role="EMICard" EntitySet="EMICard" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__Product_ID__2CF2ADDF" Association="Self.FK__Cart__Product_ID__2CF2ADDF">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMICard__usernam__2180FB33" Association="Self.FK__EMICard__usernam__2180FB33">
+      <End Role="RegisterBank" EntitySet="RegisterBank" />
+      <End Role="EMICard" EntitySet="EMICard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Card___3A4CA8FD" Association="Self.FK__Transacti__Card___3A4CA8FD">
+      <End Role="EMICard" EntitySet="EMICard" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Produ__395884C4" Association="Self.FK__Transacti__Produ__395884C4">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <FunctionImport Name="Delete_EMIDetails">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_AdminLoginCheck" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CartProducts" ReturnType="Collection(dbfinanceModel.sp_CartProducts_Result)">
+      <Parameter Name="cartId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_check" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_checkverify" ReturnType="Collection(Int32)">
+      <Parameter Name="uname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CreditDetails" ReturnType="Collection(dbfinanceModel.sp_CreditDetails_Result)">
+      <Parameter Name="cardNumber" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EmailCheck" ReturnType="Collection(String)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetAllRegister" />
+    <FunctionImport Name="sp_GetCardNumberWithUsername" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertEMICard">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_LastTransactionDate" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="productId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_TotalCostWithout" ReturnType="Collection(Decimal)">
+      <Parameter Name="cartId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_updatepassword">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UserLoginCheck" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UserProducts" ReturnType="Collection(dbfinanceModel.sp_UserProducts_Result)">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UserProductWithId" ReturnType="Collection(dbfinanceModel.sp_UserProductWithId_Result)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="productId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UserTransactions" ReturnType="Collection(dbfinanceModel.sp_UserTransactions_Result)">
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UserWithEmail" ReturnType="Collection(String)">
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_CartProducts_Result">
+    <Property Type="Int32" Name="Product_ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" />
+    <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Details" Nullable="false" />
+    <Property Type="Int32" Name="Quantity" Nullable="false" />
+    <Property Type="Decimal" Name="Product_Total" Nullable="true" Precision="19" />
+  </ComplexType>
+  <ComplexType Name="sp_CreditDetails_Result">
+    <Property Type="Decimal" Name="Total_Credit" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="Credit_Used" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="Reamining_Credit" Nullable="true" Precision="19" />
+  </ComplexType>
+  <ComplexType Name="sp_UserProducts_Result">
+    <Property Type="Int32" Name="Product_ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+    <Property Type="Decimal" Name="Amount_Paid" Nullable="true" Precision="19" />
+    <Property Type="String" Name="Details" Nullable="false" />
+    <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" />
+    <Property Type="Decimal" Name="Balance" Nullable="true" Precision="19" />
+    <Property Type="Int32" Name="EMI_Tenure" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_UserProductWithId_Result">
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+    <Property Type="Decimal" Name="Amount_Paid" Nullable="true" Precision="19" />
+    <Property Type="String" Name="Details" Nullable="false" />
+    <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" />
+    <Property Type="Decimal" Name="Balance" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="Current_Payment" Nullable="true" Precision="19" />
+    <Property Type="Int32" Name="EMI_Tenure" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_UserTransactions_Result">
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+    <Property Type="Decimal" Name="Amount_Paid" Nullable="false" Precision="19" />
+  </ComplexType>
+</Schema>
